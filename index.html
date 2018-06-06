@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- <meta charset="utf-8"> -->
+  <title>jQuery AJAX getting web APIs</title>
+</head>
+
+<body>
+  <h1>jQuery AJAX APIs</h1>
+  <input type="button" value="search" id="searchButton">
+  <div id="output"></div>s
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script>
+    $(document).ready(function(){
+      $('#searchButton').click(function(){
+        searchYoutube();
+      });
+    });
+
+    function searchYoutube(){
+      console.log('clicked');
+      $.ajax({
+        url: 'https://www.googleapis.com/youtube/v3/search',
+        dataType: 'json',
+        type: 'GET',
+        data: {
+          key: 'AIzaSyAD7tcUUbZldLswVTqcrEXGeSAe1V2bunE',
+          q: 'test',
+          part: 'snippet',
+          maxResults:5,
+          pageToken:'CAUQAA'
+        }
+      }).done(function(data){
+        console.log(data);
+        var nextPage = data.nextPageToken;
+        var nextPage = data.prevPageToken;
+
+        var html = "";
+        $.each(data['items'],function(index,value){
+          console.log(value);
+        });
+        $('#output').html(html);
+      });
+    }
+
+    // https://www.googleapis.com/youtube/v3/search?q=test&part=snippet&key=AIzaSyAD7tcUUbZldLswVTqcrEXGeSAe1V2bunE
+  </script>
+</body>
+
+</html>
